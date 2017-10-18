@@ -19,7 +19,6 @@ import com.stackroute.goingPlaces.domain.*;
 @RestController
 @RequestMapping("/v1.0/goingPlaces/markers")
 public class MarkerController {
-	private final AtomicLong counter = new AtomicLong();
 	
 	public boolean ValidateRequestParams(Double lat,Double lng,String name) {
 		if(lat !=null && lng !=null && name!=null) {

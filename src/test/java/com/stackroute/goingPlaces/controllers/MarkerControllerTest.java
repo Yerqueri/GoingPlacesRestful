@@ -70,12 +70,12 @@ public class MarkerControllerTest {
         assertNotNull(response);
         String actual = response.getBody();
         System.out.println(actual);
-        assertEquals("Invalid request",actual);
+        assertEquals("Invalid request parameters",actual);
     }
     
     @Test
     public void testGetMarkerList() throws Exception {
-        HttpEntity<Markers> entity = new HttpEntity<Markers>(null, headers);
+        HttpEntity<Markers> entity = new HttpEntity<Markers>(markers, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/markers"),
                 HttpMethod.POST, entity, String.class);
@@ -95,25 +95,30 @@ public class MarkerControllerTest {
         assertNotNull(response);
         String actual = response.getBody();
         System.out.println(actual);
-        assertEquals(true, actual.contains("latitude\":123.123,\"longitude\":321.321,\"name\":\"ayush"));
+        assertEquals(true, actual.contains("\"id\":1,\"latitude\":123.123,\"longitude\":321.321,\"name\":\"kormangla\""));
     }
     
     @Test
     public void testDeleteMarker() throws Exception {
-        HttpEntity<Markers> entity = new HttpEntity<Markers>(null,headers);
+        HttpEntity<Markers> entity = new HttpEntity<Markers>(markers,headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/markers"),
                 HttpMethod.POST, entity, String.class);
         response = restTemplate.exchange(
-                createURLWithPort("/markers?name=Ayush"),
+                createURLWithPort("/markers"),
+                HttpMethod.GET, entity, String.class);
+        String actual = response.getBody();
+        System.out.println(actual);
+        response = restTemplate.exchange(
+                createURLWithPort("/markers?id=1"),
                 HttpMethod.DELETE, entity, String.class);
         response = restTemplate.exchange(
                 createURLWithPort("/markers"),
                 HttpMethod.GET, entity, String.class);
         assertNotNull(response);
-        String actual = response.getBody();
+        actual = response.getBody();
         System.out.println(actual);
-        assertEquals("[]",actual);
+        assertEquals(336,actual.length());
     }
     
     
