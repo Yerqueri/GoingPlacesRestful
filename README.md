@@ -1,2 +1,2 @@
 # GoingPlacesRestful
-backend for consuming google maps api
+backend for consuming google maps api.
